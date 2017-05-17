@@ -1,6 +1,3 @@
-# arduino
-Some arduino projects
-
 # investigating the AVR instruction set.
 
 ## Unallocated opcodes
