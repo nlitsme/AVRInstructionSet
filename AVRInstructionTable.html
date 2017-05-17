@@ -1,0 +1,188 @@
+<style type="text/css">
+table tr td { white-space: nowrap; }
+table tr td:first-child {
+    font-family: monospace;
+}
+</style>
+<table>
+<tr><th> Opcode </th><th>Mnemonics </th><th>Operands </th><th>Description </th><th>Operation </th><th>Flags </th><th>#Clocks </th><th>#Clocks XMEGA </th><th>Note </th><th>Remarks  </th></tr>
+
+<tr><td colspan=10> <b>Arithmetic and Logic Instructions</b>  </td></tr>
+<tr><td> 0000 11rd dddd rrrr </td><td>ADD </td><td>Rd, Rr </td><td>Add without Carry </td><td>Rd ← Rd+Rr </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0001 11rd dddd rrrr </td><td>ADC </td><td>Rd, Rr </td><td>Add with Carry </td><td>Rd ← Rd+Rr+C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0110 KKdd KKKK </td><td>ADIW </td><td>Rd, K </td><td>Add Immediate to Word </td><td>Rd ← Rd+1:Rd+K </td><td>Z,C,N,V,S </td><td>2 </td><td>- </td><td>(1)  </td><td> d in {24,26,28,30}  </td></tr>
+<tr><td> 0001 10rd dddd rrrr </td><td>SUB </td><td>Rd, Rr </td><td>Subtract without Carry </td><td>Rd ← Rd-Rr </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0101 KKKK dddd KKKK </td><td>SUBI </td><td>Rd, K </td><td>Subtract Immediate </td><td>Rd ← Rd-K </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0000 10rd dddd rrrr </td><td>SBC </td><td>Rd, Rr </td><td>Subtract with Carry </td><td>Rd ← Rd-Rr-C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0100 KKKK dddd KKKK </td><td>SBCI </td><td>Rd, K </td><td>Subtract Immediate with Carry </td><td>Rd ← Rd-K-C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>d=16..31 </td></tr>
+<tr><td> 1001 0111 KKdd KKKK </td><td>SBIW </td><td>Rd, K </td><td>Subtract Immediate from Word </td><td>Rd+1:Rd ← Rd+1:Rd-K </td><td>Z,C,N,V,S </td><td>2 </td><td>- </td><td>(1)   </td><td>d in {24,26,28,30} </td></tr>
+<tr><td> 0010 00rd dddd rrrr </td><td>AND </td><td>Rd, Rr </td><td>Logical AND </td><td>Rd ← Rd & Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0111 KKKK dddd KKKK </td><td>ANDI </td><td>Rd, K </td><td>Logical AND with Immediate </td><td>Rd ← Rd & K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>d = 16..31 </td></tr>
+<tr><td> 0010 10rd dddd rrrr </td><td>OR </td><td>Rd, Rr </td><td>Logical OR </td><td>Rd ← Rd|Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>
+<tr><td> 0110 KKKK dddd KKKK </td><td>ORI </td><td>Rd, K </td><td>Logical OR with Immediate </td><td>Rd ← Rd|K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>    </td></tr>
+<tr><td> 0010 01rd dddd rrrr </td><td>EOR </td><td>Rd, Rr </td><td>Exclusive OR </td><td>Rd ← Rd^Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 010d dddd 0000 </td><td>COM </td><td>Rd </td><td>One's Complement </td><td>Rd ← $FF-Rd </td><td>Z,C,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 010d dddd 0001 </td><td>NEG </td><td>Rd </td><td>Two's Complement </td><td>Rd ← $00-Rd </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0110 KKKK dddd KKKK </td><td>SBR </td><td>Rd,K </td><td>Set Bit(s) in Register </td><td>Rd ← Rd or K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for ORI Rd,K </td></tr>
+<tr><td> 0111 KKKK dddd KKKK </td><td>CBR </td><td>Rd,K </td><td>Clear Bit(s) in Register </td><td>Rd ← Rd & ($FFh-K) </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td> <i>alias</i> </td></tr>
+<tr><td> 1001 010d dddd 0011 </td><td>INC </td><td>Rd </td><td>Increment </td><td>Rd ← Rd+1 </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 010d dddd 1010 </td><td>DEC </td><td>Rd </td><td>Decrement </td><td>Rd ← Rd-1 </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0010 00dd dddd dddd </td><td>TST </td><td>Rd </td><td>Test for Zero or Minus </td><td>Rd ← Rd & Rd </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for AND Rd,Rd </td></tr>
+<tr><td> 0010 01dd dddd dddd </td><td>CLR </td><td>Rd </td><td>Clear Register </td><td>Rd ← Rd xor Rd </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for EOR Rd,Rd </td></tr>
+<tr><td> 1110 1111 dddd 1111 </td><td>SER </td><td>Rd </td><td>Set Register </td><td>Rd ← $FF </td><td>None </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for LDI Rd,0xFF </td></tr>
+<tr><td> 1001 11rd dddd rrrr </td><td>MUL </td><td>Rd,Rr </td><td>Multiply Unsigned </td><td>R1:R0 ← Rd x Rr (UU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 0000 0010 dddd rrrr </td><td>MULS </td><td>Rd,Rr </td><td>Multiply Signed </td><td>R1:R0 ← Rd x Rr (SS) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td>d,r=16..31 </td></tr>
+<tr><td> 0000 0011 0ddd 0rrr </td><td>MULSU </td><td>Rd,Rr </td><td>Multiply Signed with Unsigned </td><td>R1:R0 ← Rd x Rr (SU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td>d,r=16..23 </td></tr>
+<tr><td> 0000 0011 0ddd 1rrr </td><td>FMUL </td><td>Rd,Rr </td><td>Fractional Multiply Unsigned </td><td>R1:R0 ← Rd x Rr<<1 (UU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 0000 0011 1ddd 0rrr </td><td>FMULS </td><td>Rd,Rr </td><td>Fractional Multiply Signed </td><td>R1:R0 ← Rd x Rr<<1 (SS) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 0000 0011 1ddd 1rrr </td><td>FMULSU </td><td>Rd,Rr </td><td>Fractional Multiply Signed with Unsigned </td><td>R1:R0 ← Rd x Rr<<1 (SU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 1001 0100 KKKK 1011 </td><td>DES </td><td>K </td><td>Data Encryption </td><td>if (H = 0) then R15:R0 ← Encrypt(R15:R0, K)<br>if (H = 1) then R15:R0 ← Decrypt(R15:R0, K) </td><td>- </td><td>- </td><td>1/2 </td><td>   </td><td>    </td></tr>
+<tr><td colspan=10><b>Branch Instructions</b></td></tr>
+<tr><td> 1100 kkkk kkkk kkkk </td><td>RJMP </td><td>k </td><td>Relative Jump </td><td>PC ← PC+k+1 </td><td>None </td><td>2 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0100 0000 1001 </td><td>IJMP </td><td>Z </td><td>Indirect Jump to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← 0 </td><td>None </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 0100 0001 1001 </td><td>EIJMP </td><td>EIND:Z </td><td>Extended Indirect Jump to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← EIND </td><td>None </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 010k kkkk 110k  <b>K</b></td><td>JMP </td><td>k </td><td>Jump </td><td>PC ← k </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td>two words </td></tr>
+<tr><td> 1101 kkkk kkkk kkkk </td><td>RCALL </td><td>k </td><td>Relative Call Subroutine </td><td>PC ← PC+k+1 </td><td>None </td><td>3 / 4(3)(5) </td><td>2 / 3(3) </td><td> </td><td></td></tr>
+<tr><td> 1001 0101 0000 1001 </td><td>ICALL </td><td>Z </td><td>Indirect Call to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← 0 </td><td>None </td><td>3 / 4(3) </td><td>2 / 3(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 0101 0001 1001 </td><td>EICALL </td><td>EIND:Z </td><td>Extended Indirect Call to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← EIND </td><td>None </td><td>4 (3) </td><td>3 (3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 010k kkkk 111k <b>K</b></td><td>CALL </td><td>k </td><td>call Subroutine </td><td>PC ← k, STACK ← PC, SP ← SP-2 </td><td>None </td><td>4 / 5(3) </td><td>3 / 4(3) </td><td>(1) </td><td> two words </td></tr>
+<tr><td> 1001 0101 0000 1000 </td><td>RET </td><td>- </td><td>Subroutine Return </td><td>PC ← STACK </td><td>None </td><td>4 / 5(3) </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0101 0001 1000 </td><td>RETI </td><td>- </td><td>Interrupt Return </td><td>PC ← STACK </td><td>I </td><td>4 / 5(3) </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0001 00rd dddd rrrr </td><td>CPSE </td><td>Rd,Rr </td><td>Compare, Skip if Equal </td><td>if(Rd=Rr)PC ← PC+2or3 </td><td>None </td><td>1/2/3 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0001 01rd dddd rrrr </td><td>CP </td><td>Rd,Rr </td><td>Compare </td><td>Rd - Rr </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0000 01rd dddd rrrr </td><td>CPC </td><td>Rd,Rr </td><td>Compare with Carry </td><td>Rd - Rr - C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0011 KKKK dddd KKKK </td><td>CPI </td><td>Rd,K </td><td>Compare with Immediate </td><td>Rd - K </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td> d = 16..31 </td></tr>
+<tr><td> 1111 110r rrrr 0bbb </td><td>SBRC </td><td>Rr, b </td><td>Skip if Bit in Register Cleared </td><td>if(Rr(b)=0)PC ← PC+2or3 </td><td>None </td><td>1/2/3 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1111 111r rrrr 0bbb </td><td>SBRS </td><td>Rr, b </td><td>Skip if Bit in Register Set </td><td>if(Rr(b)=1)PC ← PC+2or3 </td><td>None </td><td>1/2/3 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 1001 AAAA Abbb </td><td>SBIC </td><td>A, b </td><td>Skip if Bit in I/O Register Cleared </td><td>if(I/O(A,b)=0)PC ← PC+2or3 </td><td>None </td><td>1/2/3 </td><td>2/3/4 </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 1011 AAAA Abbb </td><td>SBIS </td><td>A, b </td><td>Skip if Bit in I/O Register Set </td><td>If(I/O(A,b)=1)PC ← PC+2or3 </td><td>None </td><td>1/2/3 </td><td>2/3/4 </td><td>   </td><td>    </td></tr>
+<tr><td> 1111 00kk kkkk k000 </td><td>BRCS </td><td>k </td><td>Branch if Carry Set </td><td>if(C=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k000 </td><td>BRLO </td><td>k </td><td>Branch if Lower </td><td>if(C=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k001 </td><td>BREQ </td><td>k </td><td>Branch if Equal </td><td>if(Z=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k010 </td><td>BRMI </td><td>k </td><td>Branch if Minus </td><td>if(N=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k011 </td><td>BRVS </td><td>k </td><td>Branch if Overflow Flag is Set </td><td>if(V=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k100 </td><td>BRLT </td><td>k </td><td>Branch if Less Than, Signed </td><td>if(N^V=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k101 </td><td>BRHS </td><td>k </td><td>Branch if Half Carry Flag Set </td><td>if(H=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k110 </td><td>BRTS </td><td>k </td><td>Branch if T Flag Set </td><td>if(T=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk k111 </td><td>BRIE </td><td>k </td><td>Branch if Interrupt Enabled </td><td>if(I=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk ksss </td><td>BRBS </td><td>s, k </td><td>Branch if Status Flag Set </td><td>if(SREG(s)=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k000 </td><td>BRCC </td><td>k </td><td>Branch if Carry Cleared </td><td>if(C=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k000 </td><td>BRSH </td><td>k </td><td>Branch if Same or Higher </td><td>if(C=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k001 </td><td>BRNE </td><td>k </td><td>Branch if Not Equal </td><td>if(Z=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k010 </td><td>BRPL </td><td>k </td><td>Branch if Plus </td><td>if(N=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k011 </td><td>BRVC </td><td>k </td><td>Branch if Overflow Flag is Cleared </td><td>if(V=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k100 </td><td>BRGE </td><td>k </td><td>Branch if Greater or Equal, Signed </td><td>if(N^V=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k101 </td><td>BRHC </td><td>k </td><td>Branch if Half Carry Flag Cleared </td><td>if(H=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k110 </td><td>BRTC </td><td>k </td><td>Branch if T Flag Cleared </td><td>if(T=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk k111 </td><td>BRID </td><td>k </td><td>Branch if Interrupt Disabled </td><td>if(I=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk ksss </td><td>BRBC </td><td>s, k </td><td>Branch if Status Flag Cleared </td><td>if(SREG(s)=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td colspan=10><b>Data Transfer Instructions</b></td></tr>
+<tr><td> 0010 11rd dddd rrrr </td><td>MOV </td><td>Rd, Rr </td><td>Copy Register </td><td>Rd ← Rr </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0000 0001 dddd rrrr </td><td>MOVW </td><td>Rd, Rr </td><td>Copy Register Pair </td><td>Rd+1:Rd ← Rr+1:Rr </td><td>None </td><td>1 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1110 KKKK dddd KKKK </td><td>LDI </td><td>Rd, K </td><td>Load Immediate </td><td>Rd ← K </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>d=16..31 </td></tr>
+<tr><td> 1001 000d dddd 0000 <b>K</b></td><td>LDS </td><td>Rd, k </td><td>Load Direct from data space </td><td>Rd ← (k) </td><td>None </td><td>1(5)/2(3) </td><td>2(3)(4) </td><td>(1) </td><td>attiny only, two words </td></tr>
+<tr><td> 1010 0kkk dddd kkkk </td><td>LDS </td><td>Rd, k </td><td>Load Direct from data space </td><td>Rd ← (k) </td><td>None </td><td>1(5)/2(3) </td><td>2(3)(4) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 000d dddd 1100 </td><td>LD </td><td>Rd, X </td><td>Load Indirect </td><td>Rd ← (X) </td><td>None </td><td>1(5)2(3) </td><td>1(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 1101 </td><td>LD </td><td>Rd, X+ </td><td>Load Indirect and Post-Increment </td><td>Rd ← (X) X←X+1 </td><td>None </td><td>2(3) </td><td>1(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 1110 </td><td>LD </td><td>Rd, -X </td><td>Load Indirect and Pre-Decrement </td><td>X←X-1, ← X-1 Rd←(X) ← (X) </td><td>None </td><td>2(3)/3(5) </td><td>2(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 1000 000d dddd 1000 </td><td>LD </td><td>Rd, Y </td><td>Load Indirect </td><td>Rd←(Y) ← (Y) </td><td>None </td><td>1(5)/2(3) </td><td>1(3)(4) </td><td>(2) </td><td><i>alias</i> for LDD Rd,Y+0 </td></tr>
+<tr><td> 1001 000d dddd 1001 </td><td>LD </td><td>Rd, Y+ </td><td>Load Indirect and Post-Increment </td><td>Rd ← (Y) Y←Y+1 </td><td>None </td><td>2(3) </td><td>1(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 1010 </td><td>LD </td><td>Rd, -Y </td><td>Load Indirect and Pre-Decrement </td><td>Y←Y-1 Rd ← (Y) </td><td>None </td><td>2(3)/3(5) </td><td>2(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 10q0 qq0d dddd 1qqq </td><td>LDD </td><td>Rd, Y+q </td><td>Load Indirect with Displacement </td><td>Rd ← (Y+q) </td><td>None </td><td>2(3) </td><td>2(3)(4) </td><td>(1) </td><td></td></tr>
+<tr><td> 1000 000d dddd 0000 </td><td>LD </td><td>Rd, Z </td><td>Load Indirect </td><td>Rd ← (Z) </td><td>None </td><td>1(5)/2(3) </td><td>1(3)(4) </td><td>(2) </td><td><i>alias</i> for LDD Rd,Z+0 </td></tr>
+<tr><td> 1001 000d dddd 0001 </td><td>LD </td><td>Rd, Z+ </td><td>Load Indirect and Post-Increment </td><td>Rd ← (Z), Z ← Z+1 </td><td>None </td><td>2(3) </td><td>1(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 0010 </td><td>LD </td><td>Rd, -Z </td><td>Load Indirect and Pre-Decrement </td><td>Z ← Z-1, Rd ← (Z) </td><td>None </td><td>2(3)/3(5) </td><td>2(3)(4) </td><td>(2) </td><td></td></tr>
+<tr><td> 10q0 qq0d dddd 0qqq </td><td>LDD </td><td>Rd, Z+q </td><td>Load Indirect with Displacement </td><td>Rd ← (Z+q) </td><td>None </td><td>2(3) </td><td>2(3)(4) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 001d dddd 0000 <b>K</b></td><td>STS </td><td>k, Rr </td><td>Store Direct to Data Space </td><td>(k) ← Rd </td><td>None </td><td>1(5)/2(3) </td><td>2(3) </td><td>(1) </td><td>attiny only, two words </td></tr>
+<tr><td> 1010 1kkk dddd kkkk </td><td>STS </td><td>k, Rr </td><td>Store Direct to Data Space </td><td>(k) ← Rd </td><td>None </td><td>1(5)/2(3) </td><td>2(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 1100 </td><td>ST </td><td>X, Rr </td><td>Store Indirect </td><td>(X) ← Rr </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 1101 </td><td>ST </td><td>X+, Rr </td><td>Store Indirect and Post-Increment </td><td>(X) ← Rr, X←X+1 </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 1110 </td><td>ST </td><td>-X, Rr </td><td>Store Indirect and Pre-Decrement </td><td>X ← X-1, (X) ← Rr </td><td>None </td><td>2(3) </td><td>2(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 1000 001r rrrr 1000 </td><td>ST </td><td>Y, Rr </td><td>Store Indirect </td><td>(Y) ← Rr </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td><i>alias</i> for STD Y+0,Rr </td></tr>
+<tr><td> 1001 001r rrrr 1001 </td><td>ST </td><td>Y+, Rr </td><td>Store Indirect and Post-Increment </td><td>(Y) ← Rr, Y←Y+1 </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 1010 </td><td>ST </td><td>-Y, Rr </td><td>Store Indirect and Pre-Decrement </td><td>Y ← Y-1, (Y) ← Rr </td><td>None </td><td>2(3) </td><td>2(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 10q0 qq1r rrrr 1qqq </td><td>STD </td><td>Y+q, Rr </td><td>Store Indirect with Displacement </td><td>(Y+q) ← Rr </td><td>None </td><td>2(3) </td><td>2(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1000 001r rrrr 0000 </td><td>ST </td><td>Z, Rr </td><td>Store Indirect </td><td>(Z) ← Rr </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td><i>alias</i> for STD Z+0,Rr </td></tr>
+<tr><td> 1001 001r rrrr 0001 </td><td>ST </td><td>Z+, Rr </td><td>Store Indirect and Post-Increment </td><td>(Z) ← Rr Z←Z+1 </td><td>None </td><td>1(5)/2(3) </td><td>1(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 0010 </td><td>ST </td><td>-Z, Rr </td><td>Store Indirect and Pre-Decrement </td><td>Z←Z-1 </td><td>None </td><td>2(3) </td><td>2(3) </td><td>(2) </td><td></td></tr>
+<tr><td> 10q0 qq1r rrrr 0qqq </td><td>STD </td><td>Z+q,Rr </td><td>Store Indirect with Displacement </td><td>(Z+q) ← Rr </td><td>None </td><td>2(3) </td><td>2(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 0101 1100 1000 </td><td>LPM </td><td>- </td><td>Load Program Memory </td><td>R0 ← (Z) </td><td>None </td><td>3 </td><td>3 </td><td>(1)(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 0100 </td><td>LPM </td><td>Rd, Z </td><td>Load Program Memory </td><td>Rd ← (Z) </td><td>None </td><td>3 </td><td>3 </td><td>(1)(2) </td><td></td></tr>
+<tr><td> 1001 000d dddd 0101 </td><td>LPM </td><td>Rd, Z+ </td><td>Load Program Memory and Post- Increment </td><td>Rd ← (Z), Z←Z+1 </td><td>None </td><td>3 </td><td>3 </td><td>(1)(2) </td><td></td></tr>
+<tr><td> 1001 0101 1101 1000 </td><td>ELPM </td><td>R0,Z </td><td>Extended Load Program Memory </td><td>R0 ← (RAMPZ:Z) </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 000d dddd 0110 </td><td>ELPM </td><td>Rd, Z </td><td>Extended Load Program Memory </td><td>Rd ← (RAMPZ:Z) </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 000d dddd 0111 </td><td>ELPM </td><td>Rd, Z+ </td><td>Extended Load Program Memory and Post-Increment </td><td>Rd ← (RAMPZ:Z), Z←Z+1 </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 0101 1110 1000 </td><td>SPM </td><td>Z </td><td>Store Program Memory </td><td>(RAMPZ:Z) ← R1:R0 </td><td>None </td><td>- </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 0101 1111 1000 </td><td>ESPM </td><td>Z+ </td><td>Store Program Memory and Post- Increment by 2 </td><td>(RAMPZ:Z) ← R1:R0, Z←Z+2 </td><td>None </td><td>- </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 1011 0AAd dddd AAAA </td><td>IN </td><td>Rd, A </td><td>In From I/O Location </td><td>Rd ← I/O(A) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1011 1AAr rrrr AAAA </td><td>OUT </td><td>A, Rr </td><td>Out To I/O Location </td><td>I/O(A) ← Rr </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 001d dddd 1111 </td><td>PUSH </td><td>Rr </td><td>Push Register on Stack </td><td>STACK ← Rr </td><td>None </td><td>2 </td><td>1(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 000d dddd 1111 </td><td>POP </td><td>Rd </td><td>Pop Register from Stack </td><td>Rd ← STACK </td><td>None </td><td>2 </td><td>2(3) </td><td>(1) </td><td></td></tr>
+<tr><td> 1001 001r rrrr 0100 </td><td>XCH </td><td>Z, Rd </td><td>Exchange </td><td>(Z) ← Rd, Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 001r rrrr 0101 </td><td>LAS </td><td>Z, Rd </td><td>Load and Set </td><td>(Z) ← Rd|(Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>
+<tr><td> 1001 001r rrrr 0110 </td><td>LAC </td><td>Z, Rd </td><td>Load and Clear </td><td>(Z) ← ($FF - Rd) & (Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 001r rrrr 0111 </td><td>LAT </td><td>Z, Rd </td><td>Load and Toggle </td><td>(Z) ← Rd^(Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td colspan=10><b>Bit and Bit-test Instructions</b></td></tr>
+<tr><td> 0000 11dd dddd dddd </td><td>LSL </td><td>Rd </td><td>Logical Shift Left </td><td>C ← Rd(7) ← Rd(6) ... Rd(1) ← Rd(0) ← 0</td><td>Z,C,N,V,H </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for ADD Rd,Rd </td></tr>
+<tr><td> 1001 010d dddd 0110 </td><td>LSR </td><td>Rd </td><td>Logical Shift Right </td><td>0 → Rd(7) → Rd(6) ... Rd(1) →  Rd(0) → C</td><td>Z,C,N,V </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0001 11dd dddd dddd </td><td>ROL </td><td>Rd </td><td>Rotate Left Through Carry </td><td>C ← Rd(7) ← Rd(6) ... Rd(1) ← Rd(0) ← C</td><td>Z,C,N,V,H </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for ADC Rd,Rd </td></tr>
+<tr><td> 1001 010d dddd 0111 </td><td>ROR </td><td>Rd </td><td>Rotate Right Through Carry </td><td>C → Rd(7) → Rd(6) ... Rd(1) →  Rd(0) → C</td><td>Z,C,N,V </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 010d dddd 0101 </td><td>ASR </td><td>Rd </td><td>Arithmetic Shift Right </td><td>Rd(7) → Rd(7) → Rd(6) ... Rd(1) →  Rd(0) → C</td><td>Z,C,N,V </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 010d dddd 0010 </td><td>SWAP </td><td>Rd </td><td>Swap Nibbles </td><td>Rd(3..0) ↔ Rd(7..4) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0100 0sss 1000 </td><td>BSET </td><td>s </td><td>Flag Set </td><td>SREG(s) ← 1 </td><td>SREG(s) </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0100 1sss 1000 </td><td>BCLR </td><td>s </td><td>Flag Clear </td><td>SREG(s) ← 0 </td><td>SREG(s) </td><td>1 </td><td>- </td><td>   </td><td>s = 0-7 = C,Z,N,V,S,H,T,I </td></tr>
+<tr><td> 1001 1010 AAAA Abbb </td><td>SBI </td><td>A, b </td><td>Set Bit in I/O Register </td><td>I/O(A,b) ← 1 </td><td>None </td><td>1(5)2 </td><td>1 </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 1000 AAAA Abbb </td><td>CBI </td><td>A, b </td><td>Clear Bit in I/O Register </td><td>I/O(A,b) ← 0 </td><td>None </td><td>1(5)/2 </td><td>1 </td><td>   </td><td>    </td></tr>
+<tr><td> 1111 101d dddd 0bbb </td><td>BST </td><td>Rr, b </td><td>Bit Store from Register to T </td><td>T ← Rr(b) </td><td>T </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1111 100d dddd 0bbb </td><td>BLD </td><td>Rd, b </td><td>Bit load from T to Register </td><td>Rd(b) ← T </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0100 0000 1000 </td><td>SEC </td><td>- </td><td>Set Carry </td><td>C←1 </td><td>C </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1000 1000 </td><td>CLC </td><td>- </td><td>Clear Carry </td><td>C←0 </td><td>C </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0010 1000 </td><td>SEN </td><td>- </td><td>Set Negative Flag </td><td>N←1 </td><td>N </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1010 1000 </td><td>CLN </td><td>- </td><td>Clear Negative Flag </td><td>N←0 </td><td>N </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0001 1000 </td><td>SEZ </td><td>- </td><td>Set Zero Flag </td><td>Z←1 </td><td>Z </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1001 1000 </td><td>CLZ </td><td>- </td><td>Clear Zero Flag </td><td>Z←0 </td><td>Z </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0111 1000 </td><td>SEI </td><td>- </td><td>Global Interrupt Enable </td><td>I←1 </td><td>I </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1111 1000 </td><td>CLI </td><td>- </td><td>Global Interrupt Disable </td><td>I←0 </td><td>I </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0100 1000 </td><td>SES </td><td>- </td><td>Set Signed Test Flag </td><td>S←1 </td><td>S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1100 1000 </td><td>CLS </td><td>- </td><td>Clear Signed Test Flag </td><td>S←0 </td><td>S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0011 1000 </td><td>SEV </td><td>- </td><td>Set Two's Complement Overflow </td><td>V←1 </td><td>V </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1011 1000 </td><td>CLV </td><td>- </td><td>Clear Two's Complement Overflow </td><td>V←0 </td><td>V </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0110 1000 </td><td>SET </td><td>- </td><td>Set T in SREG </td><td>T←1 </td><td>T </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1110 1000 </td><td>CLT </td><td>- </td><td>Clear T in SREG </td><td>T←0 </td><td>T </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 0101 1000 </td><td>SEH </td><td>- </td><td>Set Half Carry Flag in SREG </td><td>H←1 </td><td>H </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1001 0100 1101 1000 </td><td>CLH </td><td>- </td><td>Clear Half Carry Flag in SREG </td><td>H←0 </td><td>H </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td colspan=10><b>MCU Control Instructions</b></td></tr>
+<tr><td> 1001 0101 1001 1000 </td><td>BREAK </td><td>- </td><td>Break </td><td>(See specific descr. for BREAK) </td><td>None </td><td>1 </td><td>- </td><td>(1) </td><td></td></tr>
+<tr><td> 0000 0000 0000 0000 </td><td>NOP </td><td>- </td><td>No Operation </td><td>- </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0101 1000 1000 </td><td>SLEEP </td><td>- </td><td>Sleep </td><td>(see specific descr. for Sleep) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 0101 1010 1000 </td><td>WDR </td><td>- </td><td>Watchdog Reset </td><td>(see specific descr. for WDR) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td colspan=10><b>unallocated codes</b></td></tr>
+<tr><td> 0000 0000 xxxx xxxx </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td> x!=0 </td></tr>
+<tr><td> 1001 000x xxxx 0011 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 000x xxxx 1000 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 000x xxxx 1011 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 001x xxxx 0011 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 001x xxxx 1000 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 001x xxxx 1011 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 0101 xxxx 1001 </td><td>(E)ICALL</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  x!={0,1}    </td></tr>
+<tr><td> 1001 0101 0xxx 1000 </td><td>(I)RET  </td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  x!={0,1}    </td></tr>
+<tr><td> 1001 0101 1011 1000 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 010x xxxx 0100 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 0101 xxxx 1011 </td><td>NOP</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>  </td></tr>
+<tr><td> 1001 0100 xxxx 1001 </td><td>(E)IJMP  </td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td> x!={0,1}    </td></tr>
+<tr><td> 1111 100x xxxx 1xxx </td><td>BLD Rd,b </td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>             </td></tr>
+<tr><td> 1111 101x xxxx 1xxx </td><td>BST Rd,b </td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>             </td></tr>
+<tr><td> 1111 110x xxxx 1xxx </td><td>SBRC Rr,b</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>             </td></tr>
+<tr><td> 1111 111x xxxx 1xxx </td><td>SBRS Rr,b</td><td><td></td></td><td><td></td></td><td><td></td></td><td>(7)</td><td>             </td></tr>
+</table>
+
+<ol>
+<li> This instruction is not available in all devices. Refer to the device specific instruction set summary.
+<li> Not all variants of this instruction are available in all devices. Refer to the device specific instruction set summary.
+<li> Cycle times for Data memory accesses assume internal memory accesses, and are not valid for accesses via the external RAM interface.
+<li> One extra cycle must be added when accessing Internal SRAM.
+<li> Number of clock cycles for Reduced Core tinyAVR®.
+
+<li> SPM should be called ESPM, since it addresses through RAMPZ
+<li> some of the unallocated codes are actually aliases for existing instructions.
+</ol>
