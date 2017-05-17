@@ -24,7 +24,7 @@ Some arduino projects
 
 ## instructions
 
-A prettier table can be found [here](AVRInstructionTable.html)
+A prettier table can be found [here](http://htmlpreview.github.io/?https://github.com/nlitsme/arduino/blob/master/AVRInstructionTable.html)
 
 | Opcode  | Mnemonics  | Operands  | Description  | Operation  | Flags  | #Clocks  | #Clocks XMEGA  | Note  | Remarks  |
 | :-----  | :--------  | :-------  | :----------  | :--------  | :----  | :------  | :------------  | :---  | :------  |
