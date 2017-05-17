@@ -1,6 +1,14 @@
 # arduino
 Some arduino projects
 
+# investigating the AVR instruction set.
+
+## Unallocated opcodes
+
+There are some unallocated opcodes, they are listed at the bottom of the instruction table below.
+I used [this python](analyze_avr_insns.py) script to verify that the table below has all possible bit combinations listed.
+
+Then i investigated the unallocated codes using [this arduino project](insntest.ino)
 
 ## conditions
 
