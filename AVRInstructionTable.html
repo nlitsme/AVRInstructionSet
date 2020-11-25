@@ -41,7 +41,7 @@ table tr td:first-child {
 <tr><td> 1100 kkkk kkkk kkkk </td><td>RJMP </td><td>k </td><td>Relative Jump </td><td>PC ← PC+k+1 </td><td>None </td><td>2 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 0100 0000 1001 </td><td>IJMP </td><td>Z </td><td>Indirect Jump to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← 0 </td><td>None </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
 <tr><td> 1001 0100 0001 1001 </td><td>EIJMP </td><td>EIND:Z </td><td>Extended Indirect Jump to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← EIND </td><td>None </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
-<tr><td> 1001 010k kkkk 110k  <b>K</b></td><td>JMP </td><td>k </td><td>Jump </td><td>PC ← k </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td>two words </td></tr>
+<tr><td> 1001 010k kkkk 110k <b>K</b></td><td>JMP </td><td>k </td><td>Jump </td><td>PC ← k </td><td>None </td><td>3 </td><td>- </td><td>(1) </td><td>two words </td></tr>
 <tr><td> 1101 kkkk kkkk kkkk </td><td>RCALL </td><td>k </td><td>Relative Call Subroutine </td><td>PC ← PC+k+1 </td><td>None </td><td>3 / 4(3)(5) </td><td>2 / 3(3) </td><td> </td><td></td></tr>
 <tr><td> 1001 0101 0000 1001 </td><td>ICALL </td><td>Z </td><td>Indirect Call to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← 0 </td><td>None </td><td>3 / 4(3) </td><td>2 / 3(3) </td><td>(1) </td><td></td></tr>
 <tr><td> 1001 0101 0001 1001 </td><td>EICALL </td><td>EIND:Z </td><td>Extended Indirect Call to (Z) </td><td>PC(15:0) ← Z, PC(21:16) ← EIND </td><td>None </td><td>4 (3) </td><td>3 (3) </td><td>(1) </td><td></td></tr>
@@ -65,7 +65,7 @@ table tr td:first-child {
 <tr><td> 1111 00kk kkkk k101 </td><td>BRHS </td><td>k </td><td>Branch if Half Carry Flag Set </td><td>if(H=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 00kk kkkk k110 </td><td>BRTS </td><td>k </td><td>Branch if T Flag Set </td><td>if(T=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 00kk kkkk k111 </td><td>BRIE </td><td>k </td><td>Branch if Interrupt Enabled </td><td>if(I=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
-<tr><td> 1111 00kk kkkk ksss </td><td>BRBS </td><td>s, k </td><td>Branch if Status Flag Set </td><td>if(SREG(s)=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 00kk kkkk ksss </td><td>BRBS </td><td>s, k </td><td>Branch if Status Flag Set </td><td>if(SREG(s)=1)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td> </td></tr>
 <tr><td> 1111 01kk kkkk k000 </td><td>BRCC </td><td>k </td><td>Branch if Carry Cleared </td><td>if(C=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 01kk kkkk k000 </td><td>BRSH </td><td>k </td><td>Branch if Same or Higher </td><td>if(C=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 01kk kkkk k001 </td><td>BRNE </td><td>k </td><td>Branch if Not Equal </td><td>if(Z=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
@@ -75,7 +75,7 @@ table tr td:first-child {
 <tr><td> 1111 01kk kkkk k101 </td><td>BRHC </td><td>k </td><td>Branch if Half Carry Flag Cleared </td><td>if(H=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 01kk kkkk k110 </td><td>BRTC </td><td>k </td><td>Branch if T Flag Cleared </td><td>if(T=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
 <tr><td> 1111 01kk kkkk k111 </td><td>BRID </td><td>k </td><td>Branch if Interrupt Disabled </td><td>if(I=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
-<tr><td> 1111 01kk kkkk ksss </td><td>BRBC </td><td>s, k </td><td>Branch if Status Flag Cleared </td><td>if(SREG(s)=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td><i>alias</i> </td></tr>
+<tr><td> 1111 01kk kkkk ksss </td><td>BRBC </td><td>s, k </td><td>Branch if Status Flag Cleared </td><td>if(SREG(s)=0)thenPC ← PC+k+1 </td><td>None </td><td>1/2 </td><td>- </td><td>   </td><td> </td></tr>
 <tr><td colspan=10><b>Data Transfer Instructions</b></td></tr>
 <tr><td> 0010 11rd dddd rrrr </td><td>MOV </td><td>Rd, Rr </td><td>Copy Register </td><td>Rd ← Rr </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 0000 0001 dddd rrrr </td><td>MOVW </td><td>Rd, Rr </td><td>Copy Register Pair </td><td>Rd+1:Rd ← Rr+1:Rr </td><td>None </td><td>1 </td><td>- </td><td>(1) </td><td></td></tr>

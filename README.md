@@ -50,7 +50,7 @@ A prettier table can be found [here](http://htmlpreview.github.io/?https://githu
 | 1001 010d dddd 0000  | COM  | Rd  | One's Complement  | Rd ← $FF-Rd  | Z,C,N,V,S  | 1  | -  |     |     |
 | 1001 010d dddd 0001  | NEG  | Rd  | Two's Complement  | Rd ← $00-Rd  | Z,C,N,V,S,H  | 1  | -  |     |     |
 | 0110 KKKK dddd KKKK  | SBR  | Rd,K  | Set Bit(s) in Register  | Rd ← Rd or K  | Z,N,V,S  | 1  | -  |     | _alias_ for ORI Rd,K |
-| 0111 KKKK dddd KKKK  | CBR  | Rd,K  | Clear Bit(s) in Register  | Rd ← Rd & ($FFh-K)  | Z,N,V,S  | 1  | -  |     |  _alias_ |
+| 0111 KKKK dddd KKKK  | CBR  | Rd,K  | Clear Bit(s) in Register  | Rd ← Rd & ($FFh-K)  | Z,N,V,S  | 1  | -  |     |  _alias_ for ANDI |
 | 1001 010d dddd 0011  | INC  | Rd  | Increment  | Rd ← Rd+1  | Z,N,V,S  | 1  | -  |     |     |
 | 1001 010d dddd 1010  | DEC  | Rd  | Decrement  | Rd ← Rd-1  | Z,N,V,S  | 1  | -  |     |     |
 | 0010 00dd dddd dddd  | TST  | Rd  | Test for Zero or Minus  | Rd ← Rd & Rd  | Z,N,V,S  | 1  | -  |     | _alias_ for AND Rd,Rd |
@@ -67,47 +67,47 @@ A prettier table can be found [here](http://htmlpreview.github.io/?https://githu
 | 1100 kkkk kkkk kkkk  | RJMP  | k  | Relative Jump  | PC ← PC+k+1  | None  | 2  | -  |     |     |
 | 1001 0100 0000 1001  | IJMP  | Z  | Indirect Jump to (Z)  | PC(15:0) ← Z, PC(21:16) ← 0  | None  | 2  | -  | (1)  | |
 | 1001 0100 0001 1001  | EIJMP  | EIND:Z  | Extended Indirect Jump to (Z)  | PC(15:0) ← Z, PC(21:16) ← EIND  | None  | 2  | -  | (1)  | |
-| 1001 010k kkkk 110k  **K** | JMP  | k  | Jump  | PC ← k  | None  | 3  | -  | (1)  | two words |
+| 1001 010k kkkk 110k **K** | JMP  | k  | Jump  | PC ← k  | None  | 3  | -  | (1)  | two words |
 | 1101 kkkk kkkk kkkk  | RCALL  | k  | Relative Call Subroutine  | PC ← PC+k+1  | None  | 3 / 4(3)(5)  | 2 / 3(3)  |   | |
 | 1001 0101 0000 1001  | ICALL  | Z  | Indirect Call to (Z)  | PC(15:0) ← Z, PC(21:16) ← 0  | None  | 3 / 4(3)  | 2 / 3(3)  | (1)  | |
 | 1001 0101 0001 1001  | EICALL  | EIND:Z  | Extended Indirect Call to (Z)  | PC(15:0) ← Z, PC(21:16) ← EIND  | None  | 4 (3)  | 3 (3)  | (1)  | |
 | 1001 010k kkkk 111k **K** | CALL  | k  | call Subroutine  | PC ← k, STACK ← PC, SP ← SP-2  | None  | 4 / 5(3)  | 3 / 4(3)  | (1)  |  two words |
-| 1001 0101 0000 1000  | RET  | -  | Subroutine Return  | PC ← STACK  | None  | 4 / 5(3)  | -  |     |     |
-| 1001 0101 0001 1000  | RETI  | -  | Interrupt Return  | PC ← STACK  | I  | 4 / 5(3)  | -  |     |     |
-| 0001 00rd dddd rrrr  | CPSE  | Rd,Rr  | Compare, Skip if Equal  | if(Rd=Rr)PC ← PC+2or3  | None  | 1/2/3  | -  |     |     |
+| 1001 0101 0000 1000  | RET  | -  | Subroutine Return  | PC ← STACK, SP ← SP+2  | None  | 4 / 5(3)  | -  |     |     |
+| 1001 0101 0001 1000  | RETI  | -  | Interrupt Return  | PC ← STACK, SP ← SP+2  | I  | 4 / 5(3)  | -  |     |     |
 | 0001 01rd dddd rrrr  | CP  | Rd,Rr  | Compare  | Rd - Rr  | Z,C,N,V,S,H  | 1  | -  |     |     |
 | 0000 01rd dddd rrrr  | CPC  | Rd,Rr  | Compare with Carry  | Rd - Rr - C  | Z,C,N,V,S,H  | 1  | -  |     |     |
 | 0011 KKKK dddd KKKK  | CPI  | Rd,K  | Compare with Immediate  | Rd - K  | Z,C,N,V,S,H  | 1  | -  |     |  d = 16..31 |
+| 0001 00rd dddd rrrr  | CPSE  | Rd,Rr  | Compare, Skip if Equal  | if(Rd=Rr)PC ← PC+2or3  | None  | 1/2/3  | -  |     |     |
 | 1111 110r rrrr 0bbb  | SBRC  | Rr, b  | Skip if Bit in Register Cleared  | if(Rr(b)=0)PC ← PC+2or3  | None  | 1/2/3  | -  |     |     |
 | 1111 111r rrrr 0bbb  | SBRS  | Rr, b  | Skip if Bit in Register Set  | if(Rr(b)=1)PC ← PC+2or3  | None  | 1/2/3  | -  |     |     |
 | 1001 1001 AAAA Abbb  | SBIC  | A, b  | Skip if Bit in I/O Register Cleared  | if(I/O(A,b)=0)PC ← PC+2or3  | None  | 1/2/3  | 2/3/4  |     |     |
 | 1001 1011 AAAA Abbb  | SBIS  | A, b  | Skip if Bit in I/O Register Set  | If(I/O(A,b)=1)PC ← PC+2or3  | None  | 1/2/3  | 2/3/4  |     |     |
-| 1111 00kk kkkk k000  | BRCS  | k  | Branch if Carry Set  | if(C=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k000  | BRLO  | k  | Branch if Lower  | if(C=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k001  | BREQ  | k  | Branch if Equal  | if(Z=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k010  | BRMI  | k  | Branch if Minus  | if(N=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k011  | BRVS  | k  | Branch if Overflow Flag is Set  | if(V=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k100  | BRLT  | k  | Branch if Less Than, Signed  | if(N^V=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k101  | BRHS  | k  | Branch if Half Carry Flag Set  | if(H=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k110  | BRTS  | k  | Branch if T Flag Set  | if(T=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk k111  | BRIE  | k  | Branch if Interrupt Enabled  | if(I=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 00kk kkkk ksss  | BRBS  | s, k  | Branch if Status Flag Set  | if(SREG(s)=1)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k000  | BRCC  | k  | Branch if Carry Cleared  | if(C=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k000  | BRSH  | k  | Branch if Same or Higher  | if(C=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k001  | BRNE  | k  | Branch if Not Equal  | if(Z=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k010  | BRPL  | k  | Branch if Plus  | if(N=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k011  | BRVC  | k  | Branch if Overflow Flag is Cleared  | if(V=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k100  | BRGE  | k  | Branch if Greater or Equal, Signed  | if(N^V=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k101  | BRHC  | k  | Branch if Half Carry Flag Cleared  | if(H=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k110  | BRTC  | k  | Branch if T Flag Cleared  | if(T=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk k111  | BRID  | k  | Branch if Interrupt Disabled  | if(I=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
-| 1111 01kk kkkk ksss  | BRBC  | s, k  | Branch if Status Flag Cleared  | if(SREG(s)=0)thenPC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k000  | BRCS  | k  | Branch if Carry Set  | if(C=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k000  | BRLO  | k  | Branch if Lower  | if(C=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k001  | BREQ  | k  | Branch if Equal  | if(Z=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k010  | BRMI  | k  | Branch if Minus  | if(N=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k011  | BRVS  | k  | Branch if Overflow Flag is Set  | if(V=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k100  | BRLT  | k  | Branch if Less Than, Signed  | if(N^V=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k101  | BRHS  | k  | Branch if Half Carry Flag Set  | if(H=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k110  | BRTS  | k  | Branch if T Flag Set  | if(T=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk k111  | BRIE  | k  | Branch if Interrupt Enabled  | if(I=1)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 00kk kkkk ksss  | BRBS  | s, k  | Branch if Status Flag Set  | if(SREG(s)=1)then PC ← PC+k+1  | None  | 1/2  | -  |     |  |
+| 1111 01kk kkkk k000  | BRCC  | k  | Branch if Carry Cleared  | if(C=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k000  | BRSH  | k  | Branch if Same or Higher  | if(C=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k001  | BRNE  | k  | Branch if Not Equal  | if(Z=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k010  | BRPL  | k  | Branch if Plus  | if(N=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k011  | BRVC  | k  | Branch if Overflow Flag is Cleared  | if(V=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k100  | BRGE  | k  | Branch if Greater or Equal, Signed  | if(N^V=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k101  | BRHC  | k  | Branch if Half Carry Flag Cleared  | if(H=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k110  | BRTC  | k  | Branch if T Flag Cleared  | if(T=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk k111  | BRID  | k  | Branch if Interrupt Disabled  | if(I=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | _alias_ |
+| 1111 01kk kkkk ksss  | BRBC  | s, k  | Branch if Status Flag Cleared  | if(SREG(s)=0)then PC ← PC+k+1  | None  | 1/2  | -  |     | |
 | **Data Transfer Instructions**  ||||||||||
 | 0010 11rd dddd rrrr  | MOV  | Rd, Rr  | Copy Register  | Rd ← Rr  | None  | 1  | -  |     |     |
 | 0000 0001 dddd rrrr  | MOVW  | Rd, Rr  | Copy Register Pair  | Rd+1:Rd ← Rr+1:Rr  | None  | 1  | -  | (1)  | |
 | 1110 KKKK dddd KKKK  | LDI  | Rd, K  | Load Immediate  | Rd ← K  | None  | 1  | -  |     | d=16..31 |
-| 1001 000d dddd 0000 **K** | LDS  | Rd, k  | Load Direct from data space  | Rd ← (k)  | None  | 1(5)/2(3)  | 2(3)(4)  | (1)  | attiny only, two words |
-| 1010 0kkk dddd kkkk  | LDS  | Rd, k  | Load Direct from data space  | Rd ← (k)  | None  | 1(5)/2(3)  | 2(3)(4)  | (1)  | |
+| 1001 000d dddd 0000 **K** | LDS  | Rd, k  | Load Direct from data space  | Rd ← (k)  | None  | 1(5)/2(3)  | 2(3)(4)  | (1)  | two words |
+| 1010 0kkk dddd kkkk  | LDS  | Rd, k  | Load Direct from data space  | Rd ← (k)  | None  | 1(5)/2(3)  | 2(3)(4)  | (1)  | AVRrc only |
 | 1001 000d dddd 1100  | LD  | Rd, X  | Load Indirect  | Rd ← (X)  | None  | 1(5)2(3)  | 1(3)(4)  | (2)  | |
 | 1001 000d dddd 1101  | LD  | Rd, X+  | Load Indirect and Post-Increment  | Rd ← (X) X←X+1  | None  | 2(3)  | 1(3)(4)  | (2)  | |
 | 1001 000d dddd 1110  | LD  | Rd, -X  | Load Indirect and Pre-Decrement  | X←X-1, ← X-1 Rd←(X) ← (X)  | None  | 2(3)/3(5)  | 2(3)(4)  | (2)  | |
@@ -119,8 +119,8 @@ A prettier table can be found [here](http://htmlpreview.github.io/?https://githu
 | 1001 000d dddd 0001  | LD  | Rd, Z+  | Load Indirect and Post-Increment  | Rd ← (Z), Z ← Z+1  | None  | 2(3)  | 1(3)(4)  | (2)  | |
 | 1001 000d dddd 0010  | LD  | Rd, -Z  | Load Indirect and Pre-Decrement  | Z ← Z-1, Rd ← (Z)  | None  | 2(3)/3(5)  | 2(3)(4)  | (2)  | |
 | 10q0 qq0d dddd 0qqq  | LDD  | Rd, Z+q  | Load Indirect with Displacement  | Rd ← (Z+q)  | None  | 2(3)  | 2(3)(4)  | (1)  | |
-| 1001 001d dddd 0000 **K** | STS  | k, Rr  | Store Direct to Data Space  | (k) ← Rd  | None  | 1(5)/2(3)  | 2(3)  | (1)  | attiny only, two words |
-| 1010 1kkk dddd kkkk  | STS  | k, Rr  | Store Direct to Data Space  | (k) ← Rd  | None  | 1(5)/2(3)  | 2(3)  | (1)  | |
+| 1001 001d dddd 0000 **K** | STS  | k, Rr  | Store Direct to Data Space  | (k) ← Rd  | None  | 1(5)/2(3)  | 2(3)  | (1)  | two words |
+| 1010 1kkk dddd kkkk  | STS  | k, Rr  | Store Direct to Data Space  | (k) ← Rd  | None  | 1(5)/2(3)  | 2(3)  | (1)  | AVRrc only |
 | 1001 001r rrrr 1100  | ST  | X, Rr  | Store Indirect  | (X) ← Rr  | None  | 1(5)/2(3)  | 1(3)  | (2)  | |
 | 1001 001r rrrr 1101  | ST  | X+, Rr  | Store Indirect and Post-Increment  | (X) ← Rr, X←X+1  | None  | 1(5)/2(3)  | 1(3)  | (2)  | |
 | 1001 001r rrrr 1110  | ST  | -X, Rr  | Store Indirect and Pre-Decrement  | X ← X-1, (X) ← Rr  | None  | 2(3)  | 2(3)  | (2)  | |
@@ -142,8 +142,8 @@ A prettier table can be found [here](http://htmlpreview.github.io/?https://githu
 | 1001 0101 1111 1000  | ESPM  | Z+  | Store Program Memory and Post- Increment by 2  | (RAMPZ:Z) ← R1:R0, Z←Z+2  | None  | -  | -  | (1)  | |
 | 1011 0AAd dddd AAAA  | IN  | Rd, A  | In From I/O Location  | Rd ← I/O(A)  | None  | 1  | -  |     |     |
 | 1011 1AAr rrrr AAAA  | OUT  | A, Rr  | Out To I/O Location  | I/O(A) ← Rr  | None  | 1  | -  |     |     |
-| 1001 001d dddd 1111  | PUSH  | Rr  | Push Register on Stack  | STACK ← Rr  | None  | 2  | 1(3)  | (1)  | |
-| 1001 000d dddd 1111  | POP  | Rd  | Pop Register from Stack  | Rd ← STACK  | None  | 2  | 2(3)  | (1)  | |
+| 1001 001d dddd 1111  | PUSH  | Rr  | Push Register on Stack  | STACK ← Rr, SP ← SP-1  | None  | 2  | 1(3)  | (1)  | |
+| 1001 000d dddd 1111  | POP  | Rd  | Pop Register from Stack  | SP ← SP+1, Rd ← STACK  | None  | 2  | 2(3)  | (1)  | |
 | 1001 001r rrrr 0100  | XCH  | Z, Rd  | Exchange  | (Z) ← Rd, Rd ← (Z)  | None  | 1  | -  |     |     |
 | 1001 001r rrrr 0101  | LAS  | Z, Rd  | Load and Set  | (Z) ← Rd|(Z) Rd ← (Z)  | None  | 1  | -  |     | 
 | 1001 001r rrrr 0110  | LAC  | Z, Rd  | Load and Clear  | (Z) ← ($FF - Rd) & (Z) Rd ← (Z)  | None  | 1  | -  |     |     |
