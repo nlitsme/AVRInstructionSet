@@ -16,26 +16,26 @@ table tr td:first-child {
 <tr><td> 0000 10rd dddd rrrr </td><td>SBC </td><td>Rd, Rr </td><td>Subtract with Carry </td><td>Rd ← Rd-Rr-C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 0100 KKKK dddd KKKK </td><td>SBCI </td><td>Rd, K </td><td>Subtract Immediate with Carry </td><td>Rd ← Rd-K-C </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>d=16..31 </td></tr>
 <tr><td> 1001 0111 KKdd KKKK </td><td>SBIW </td><td>Rd, K </td><td>Subtract Immediate from Word </td><td>Rd+1:Rd ← Rd+1:Rd-K </td><td>Z,C,N,V,S </td><td>2 </td><td>- </td><td>(1)   </td><td>d in {24,26,28,30} </td></tr>
-<tr><td> 0010 00rd dddd rrrr </td><td>AND </td><td>Rd, Rr </td><td>Logical AND </td><td>Rd ← Rd & Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
-<tr><td> 0111 KKKK dddd KKKK </td><td>ANDI </td><td>Rd, K </td><td>Logical AND with Immediate </td><td>Rd ← Rd & K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>d = 16..31 </td></tr>
+<tr><td> 0010 00rd dddd rrrr </td><td>AND </td><td>Rd, Rr </td><td>Logical AND </td><td>Rd ← Rd &amp; Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 0111 KKKK dddd KKKK </td><td>ANDI </td><td>Rd, K </td><td>Logical AND with Immediate </td><td>Rd ← Rd &amp; K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>d = 16..31 </td></tr>
 <tr><td> 0010 10rd dddd rrrr </td><td>OR </td><td>Rd, Rr </td><td>Logical OR </td><td>Rd ← Rd|Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>
 <tr><td> 0110 KKKK dddd KKKK </td><td>ORI </td><td>Rd, K </td><td>Logical OR with Immediate </td><td>Rd ← Rd|K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>    </td></tr>
 <tr><td> 0010 01rd dddd rrrr </td><td>EOR </td><td>Rd, Rr </td><td>Exclusive OR </td><td>Rd ← Rd^Rr </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 010d dddd 0000 </td><td>COM </td><td>Rd </td><td>One's Complement </td><td>Rd ← $FF-Rd </td><td>Z,C,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 010d dddd 0001 </td><td>NEG </td><td>Rd </td><td>Two's Complement </td><td>Rd ← $00-Rd </td><td>Z,C,N,V,S,H </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 0110 KKKK dddd KKKK </td><td>SBR </td><td>Rd,K </td><td>Set Bit(s) in Register </td><td>Rd ← Rd or K </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for ORI Rd,K </td></tr>
-<tr><td> 0111 KKKK dddd KKKK </td><td>CBR </td><td>Rd,K </td><td>Clear Bit(s) in Register </td><td>Rd ← Rd & ($FFh-K) </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td> <i>alias</i> </td></tr>
+<tr><td> 0111 KKKK dddd KKKK </td><td>CBR </td><td>Rd,K </td><td>Clear Bit(s) in Register </td><td>Rd ← Rd &amp; ($FFh-K) </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td> <i>alias</i> </td></tr>
 <tr><td> 1001 010d dddd 0011 </td><td>INC </td><td>Rd </td><td>Increment </td><td>Rd ← Rd+1 </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 010d dddd 1010 </td><td>DEC </td><td>Rd </td><td>Decrement </td><td>Rd ← Rd-1 </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
-<tr><td> 0010 00dd dddd dddd </td><td>TST </td><td>Rd </td><td>Test for Zero or Minus </td><td>Rd ← Rd & Rd </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for AND Rd,Rd </td></tr>
+<tr><td> 0010 00dd dddd dddd </td><td>TST </td><td>Rd </td><td>Test for Zero or Minus </td><td>Rd ← Rd &amp; Rd </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for AND Rd,Rd </td></tr>
 <tr><td> 0010 01dd dddd dddd </td><td>CLR </td><td>Rd </td><td>Clear Register </td><td>Rd ← Rd xor Rd </td><td>Z,N,V,S </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for EOR Rd,Rd </td></tr>
 <tr><td> 1110 1111 dddd 1111 </td><td>SER </td><td>Rd </td><td>Set Register </td><td>Rd ← $FF </td><td>None </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for LDI Rd,0xFF </td></tr>
 <tr><td> 1001 11rd dddd rrrr </td><td>MUL </td><td>Rd,Rr </td><td>Multiply Unsigned </td><td>R1:R0 ← Rd x Rr (UU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td></td></tr>
 <tr><td> 0000 0010 dddd rrrr </td><td>MULS </td><td>Rd,Rr </td><td>Multiply Signed </td><td>R1:R0 ← Rd x Rr (SS) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td>d,r=16..31 </td></tr>
 <tr><td> 0000 0011 0ddd 0rrr </td><td>MULSU </td><td>Rd,Rr </td><td>Multiply Signed with Unsigned </td><td>R1:R0 ← Rd x Rr (SU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1) </td><td>d,r=16..23 </td></tr>
-<tr><td> 0000 0011 0ddd 1rrr </td><td>FMUL </td><td>Rd,Rr </td><td>Fractional Multiply Unsigned </td><td>R1:R0 ← Rd x Rr<<1 (UU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
-<tr><td> 0000 0011 1ddd 0rrr </td><td>FMULS </td><td>Rd,Rr </td><td>Fractional Multiply Signed </td><td>R1:R0 ← Rd x Rr<<1 (SS) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
-<tr><td> 0000 0011 1ddd 1rrr </td><td>FMULSU </td><td>Rd,Rr </td><td>Fractional Multiply Signed with Unsigned </td><td>R1:R0 ← Rd x Rr<<1 (SU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 0000 0011 0ddd 1rrr </td><td>FMUL </td><td>Rd,Rr </td><td>Fractional Multiply Unsigned </td><td>R1:R0 ← Rd x Rr&lt;&lt;1 (UU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 0000 0011 1ddd 0rrr </td><td>FMULS </td><td>Rd,Rr </td><td>Fractional Multiply Signed </td><td>R1:R0 ← Rd x Rr&lt;&lt;1 (SS) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
+<tr><td> 0000 0011 1ddd 1rrr </td><td>FMULSU </td><td>Rd,Rr </td><td>Fractional Multiply Signed with Unsigned </td><td>R1:R0 ← Rd x Rr&lt;&lt;1 (SU) </td><td>Z,C </td><td>2 </td><td>- </td><td>(1)  |r,d = 16..23 </td></tr>
 <tr><td> 1001 0100 KKKK 1011 </td><td>DES </td><td>K </td><td>Data Encryption </td><td>if (H = 0) then R15:R0 ← Encrypt(R15:R0, K)<br>if (H = 1) then R15:R0 ← Decrypt(R15:R0, K) </td><td>- </td><td>- </td><td>1/2 </td><td>   </td><td>    </td></tr>
 <tr><td colspan=10><b>Branch Instructions</b></td></tr>
 <tr><td> 1100 kkkk kkkk kkkk </td><td>RJMP </td><td>k </td><td>Relative Jump </td><td>PC ← PC+k+1 </td><td>None </td><td>2 </td><td>- </td><td>   </td><td>    </td></tr>
@@ -120,7 +120,7 @@ table tr td:first-child {
 <tr><td> 1001 000d dddd 1111 </td><td>POP </td><td>Rd </td><td>Pop Register from Stack </td><td>Rd ← STACK </td><td>None </td><td>2 </td><td>2(3) </td><td>(1) </td><td></td></tr>
 <tr><td> 1001 001r rrrr 0100 </td><td>XCH </td><td>Z, Rd </td><td>Exchange </td><td>(Z) ← Rd, Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 001r rrrr 0101 </td><td>LAS </td><td>Z, Rd </td><td>Load and Set </td><td>(Z) ← Rd|(Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>
-<tr><td> 1001 001r rrrr 0110 </td><td>LAC </td><td>Z, Rd </td><td>Load and Clear </td><td>(Z) ← ($FF - Rd) & (Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
+<tr><td> 1001 001r rrrr 0110 </td><td>LAC </td><td>Z, Rd </td><td>Load and Clear </td><td>(Z) ← ($FF - Rd) &amp; (Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td> 1001 001r rrrr 0111 </td><td>LAT </td><td>Z, Rd </td><td>Load and Toggle </td><td>(Z) ← Rd^(Z) Rd ← (Z) </td><td>None </td><td>1 </td><td>- </td><td>   </td><td>    </td></tr>
 <tr><td colspan=10><b>Bit and Bit-test Instructions</b></td></tr>
 <tr><td> 0000 11dd dddd dddd </td><td>LSL </td><td>Rd </td><td>Logical Shift Left </td><td>C ← Rd(7) ← Rd(6) ... Rd(1) ← Rd(0) ← 0</td><td>Z,C,N,V,H </td><td>1 </td><td>- </td><td>   </td><td><i>alias</i> for ADD Rd,Rd </td></tr>
